@@ -31,7 +31,7 @@ def load():
 	return df
 	'''
 	#SOLUTION START( ~ 1 line of code)
-	
+	df = pd.read_csv('data/realestate.csv')
 
 	#SOLUTION END
 	return df
@@ -52,7 +52,7 @@ def getShape():
 	return the shape of dataframe
 	'''
 	#SOLUTION START( ~ 1 line of code)
-	
+	return(df.shape)
 
 	#SOLUTION END
 
@@ -65,7 +65,7 @@ def getInfo():
 	including the index dtype and columns, non-null values and memory usage.
 	'''
 	#SOLUTION START( ~ 1 line of code)
-	
+	return(df.info)	
 
 	#SOLUTION END
 
@@ -88,8 +88,7 @@ def checkNull():
 	'''
 
 	#SOLUTION START( ~ 1 line of code)
-	
-
+	return(df.isnull().sum())
 	#SOLUTION END
 
 
@@ -102,7 +101,7 @@ def getStatistic():
 	'''
 
 	#SOLUTION START( ~ 1 line of code)
-
+	return(df.describe)
 	#SOLUTION END
 
 print(getStatistic())
@@ -126,6 +125,8 @@ def split():
 	IMPORTANT: this function will return four values X_train, X_test, y_train, y_test
 	'''
 	#SOLUTION START( ~ 1-2 line of code)
+	X_train, X_test = train_test_split(df_X, test_size=0.2, random_state=42)
+	y_train, y_test = train_test_split(df_y, test_size=0.2, random_state=42)
 
 	#SOLUTION END
 
@@ -142,28 +143,31 @@ def makeModel():
 
 	# Create linear regression object
 	#SOLUTION START(~ 1 line of code)
+	model = LinearRegression()
 
 	#SOLUTION END
 
 	# Train the model using the training sets
 	#SOLUTION START(~ 1 line of code)
+	model.fit(X_train, y_train)
 
 
 	#SOLUTION END
 
 	# Make predictions using the testing set
 	#SOLUTION START(~ 1 line of code)
+	y_pred = model.predict(X_test)
 
 	#SOLUTION END
 
 	#fill in the blanks, how to get the value of coefficients, intercept, mse, rmse, r2score
 	#SOLUTION START
 	#The coefficients i.e. the slope
-	coefficients = #YOUR ANSWER
-	intercept = #YOUR ANSWER
-	mse = #YOUR ANSWER
-	rmse = #YOUR ANSWER
-	r2score = #YOUR ANSWER
+	coefficients =  model.coef_
+	intercept = model.intercept_
+	mse = mean_squared_error(y_test, y_pred)
+	rmse = np.sqrt(mse)
+	r2score = r2_score(y_test, y_pred)
 	#SOLUTION END
 
 
